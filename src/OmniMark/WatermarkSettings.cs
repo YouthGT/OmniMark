@@ -20,6 +20,7 @@ public class WatermarkSettings
     public double SpacingX { get; set; } = 260.0;
     public double SpacingY { get; set; } = 180.0;
     public double RotationAngle { get; set; } = -45.0;
+    public bool CoverTaskbar { get; set; } = false;
 
     public static WatermarkSettings Load()
     {

@@ -50,5 +50,25 @@ public partial class MainWindow : Window
         Overlay.SpacingX = settings.SpacingX;
         Overlay.SpacingY = settings.SpacingY;
         Overlay.RotationAngle = settings.RotationAngle;
+
+        ApplyCoverTaskbar(settings.CoverTaskbar);
+    }
+
+    private void ApplyCoverTaskbar(bool coverTaskbar)
+    {
+        if (coverTaskbar)
+        {
+            // 覆盖整个屏幕（包括任务栏）
+            WindowState = WindowState.Normal;
+            Left = 0;
+            Top = 0;
+            Width = SystemParameters.PrimaryScreenWidth;
+            Height = SystemParameters.PrimaryScreenHeight;
+        }
+        else
+        {
+            // 使用最大化模式（不覆盖任务栏）
+            WindowState = WindowState.Maximized;
+        }
     }
 }
