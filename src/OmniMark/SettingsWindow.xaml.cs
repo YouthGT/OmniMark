@@ -33,19 +33,34 @@ public partial class SettingsWindow : Window
     }
 
     private void SliderFontSize_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        => TxtFontSizeValue.Text = $"{(int)SliderFontSize.Value}";
+    {
+        if (TxtFontSizeValue != null)
+            TxtFontSizeValue.Text = $"{(int)SliderFontSize.Value}";
+    }
 
     private void SliderOpacity_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        => TxtOpacityValue.Text = $"{SliderOpacity.Value:P0}";
+    {
+        if (TxtOpacityValue != null)
+            TxtOpacityValue.Text = $"{SliderOpacity.Value:P0}";
+    }
 
     private void SliderAngle_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        => TxtAngleValue.Text = $"{(int)SliderAngle.Value}°";
+    {
+        if (TxtAngleValue != null)
+            TxtAngleValue.Text = $"{(int)SliderAngle.Value}°";
+    }
 
     private void SliderSpacingX_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        => TxtSpacingXValue.Text = $"{(int)SliderSpacingX.Value}";
+    {
+        if (TxtSpacingXValue != null)
+            TxtSpacingXValue.Text = $"{(int)SliderSpacingX.Value}";
+    }
 
     private void SliderSpacingY_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        => TxtSpacingYValue.Text = $"{(int)SliderSpacingY.Value}";
+    {
+        if (TxtSpacingYValue != null)
+            TxtSpacingYValue.Text = $"{(int)SliderSpacingY.Value}";
+    }
 
     private void Apply_Click(object sender, RoutedEventArgs e)
     {
