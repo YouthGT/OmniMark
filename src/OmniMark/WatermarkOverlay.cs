@@ -17,6 +17,10 @@ public class WatermarkOverlay : FrameworkElement
         DependencyProperty.Register(nameof(WatermarkText), typeof(string), typeof(WatermarkOverlay),
             new FrameworkPropertyMetadata("CONFIDENTIAL", FrameworkPropertyMetadataOptions.AffectsRender));
 
+    public static readonly DependencyProperty FontFamilyNameProperty =
+        DependencyProperty.Register(nameof(FontFamilyName), typeof(string), typeof(WatermarkOverlay),
+            new FrameworkPropertyMetadata("Segoe UI", FrameworkPropertyMetadataOptions.AffectsRender));
+
     public static readonly DependencyProperty FontSizeProperty =
         DependencyProperty.Register(nameof(FontSize), typeof(double), typeof(WatermarkOverlay),
             new FrameworkPropertyMetadata(36.0, FrameworkPropertyMetadataOptions.AffectsRender));
@@ -45,6 +49,12 @@ public class WatermarkOverlay : FrameworkElement
     {
         get => (string)GetValue(WatermarkTextProperty);
         set => SetValue(WatermarkTextProperty, value);
+    }
+
+    public string FontFamilyName
+    {
+        get => (string)GetValue(FontFamilyNameProperty);
+        set => SetValue(FontFamilyNameProperty, value);
     }
 
     public double FontSize
@@ -98,7 +108,7 @@ public class WatermarkOverlay : FrameworkElement
         brush.Freeze();
 
         var typeface = new Typeface(
-            new FontFamily("Arial"),
+            new FontFamily(FontFamilyName),
             FontStyles.Normal,
             FontWeights.Bold,
             FontStretches.Normal);

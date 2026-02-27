@@ -44,6 +44,7 @@ public partial class MainWindow : Window
     public void ApplySettings(WatermarkSettings settings)
     {
         Overlay.WatermarkText = settings.WatermarkText;
+        Overlay.FontFamilyName = settings.FontFamily;
         Overlay.FontSize = settings.FontSize;
         Overlay.OpacityValue = settings.Opacity;
         Overlay.TextColor = (Color)ColorConverter.ConvertFromString(settings.TextColor);
@@ -56,10 +57,12 @@ public partial class MainWindow : Window
 
     private void ApplyCoverTaskbar(bool coverTaskbar)
     {
+        // 必须先设置为 Normal 状态才能手动调整位置和大小
+        WindowState = WindowState.Normal;
+
         if (coverTaskbar)
         {
             // 覆盖整个屏幕（包括任务栏）
-            WindowState = WindowState.Normal;
             Left = 0;
             Top = 0;
             Width = SystemParameters.PrimaryScreenWidth;
@@ -67,8 +70,12 @@ public partial class MainWindow : Window
         }
         else
         {
-            // 使用最大化模式（不覆盖任务栏）
-            WindowState = WindowState.Maximized;
+            // 仅覆盖工作区域（不覆盖任务栏）
+            var workArea = SystemParameters.WorkArea;
+            Left = workArea.Left;
+            Top = workArea.Top;
+            Width = workArea.Width;
+            Height = workArea.Height;
         }
     }
 }

@@ -9,6 +9,7 @@ public partial class App : System.Windows.Application
 {
     private System.Windows.Forms.NotifyIcon? _notifyIcon;
     private MainWindow? _mainWindow;
+    private PresetScheduler? _scheduler;
 
     protected override void OnStartup(StartupEventArgs e)
     {
@@ -20,7 +21,22 @@ public partial class App : System.Windows.Application
         _mainWindow = new MainWindow(settings);
         _mainWindow.Show();
 
+        // Initialize and start the preset scheduler
+        _scheduler = new PresetScheduler(_mainWindow);
+        _scheduler.PresetChanged += Scheduler_PresetChanged;
+        _scheduler.Start();
+
         InitializeTrayIcon();
+    }
+
+    private void Scheduler_PresetChanged(object? sender, PresetChangedEventArgs e)
+    {
+        // Optional: Show notification when preset changes
+        _notifyIcon?.ShowBalloonTip(
+            1000,
+            "OmniMark",
+            $"Switched to preset: {e.PresetName}",
+            System.Windows.Forms.ToolTipIcon.Info);
     }
 
     private void InitializeTrayIcon()
@@ -34,7 +50,7 @@ public partial class App : System.Windows.Application
         {
             Icon = icon,
             Visible = true,
-            Text = "OmniMark – Desktop Watermark"
+            Text = "OmniMark - Desktop Watermark"
         };
 
         var contextMenu = new System.Windows.Forms.ContextMenuStrip();
@@ -42,10 +58,19 @@ public partial class App : System.Windows.Application
         var settingsItem = new System.Windows.Forms.ToolStripMenuItem("Settings...");
         settingsItem.Click += (s, e) => ShowSettings();
 
+        var scheduleItem = new System.Windows.Forms.ToolStripMenuItem("Schedule...");
+        scheduleItem.Click += (s, e) => ShowSchedule();
+
+        var nextPresetItem = new System.Windows.Forms.ToolStripMenuItem("Switch Preset Now");
+        nextPresetItem.Click += (s, e) => _scheduler?.SwitchToNext();
+
         var exitItem = new System.Windows.Forms.ToolStripMenuItem("Exit");
         exitItem.Click += (s, e) => Shutdown();
 
         contextMenu.Items.Add(settingsItem);
+        contextMenu.Items.Add(scheduleItem);
+        contextMenu.Items.Add(new System.Windows.Forms.ToolStripSeparator());
+        contextMenu.Items.Add(nextPresetItem);
         contextMenu.Items.Add(new System.Windows.Forms.ToolStripSeparator());
         contextMenu.Items.Add(exitItem);
 
@@ -63,10 +88,26 @@ public partial class App : System.Windows.Application
             Owner = _mainWindow
         };
         settingsWindow.ShowDialog();
+
+        // Reload scheduler in case presets were changed
+        _scheduler?.Reload();
+    }
+
+    private void ShowSchedule()
+    {
+        if (_mainWindow == null || _scheduler == null)
+            return;
+
+        var scheduleDialog = new ScheduleDialog(_scheduler)
+        {
+            Owner = _mainWindow
+        };
+        scheduleDialog.ShowDialog();
     }
 
     protected override void OnExit(ExitEventArgs e)
     {
+        _scheduler?.Dispose();
         _notifyIcon?.Dispose();
         base.OnExit(e);
     }

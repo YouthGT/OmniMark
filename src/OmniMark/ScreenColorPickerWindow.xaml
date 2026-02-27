@@ -1,0 +1,41 @@
+<Window x:Class="OmniMark.ScreenColorPickerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Topmost="True"
+        WindowState="Maximized"
+        ShowInTaskbar="False"
+        Cursor="Cross"
+        Title="ScreenColorPicker">
+    <Grid>
+        <Rectangle Fill="#01000000" />
+        <Canvas x:Name="PreviewCanvas">
+            <Border x:Name="MagnifierBorder" 
+                    Width="120" Height="120" 
+                    BorderBrush="White" BorderThickness="2"
+                    Background="Black" CornerRadius="4">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Border x:Name="ColorPreviewBox" 
+                            Width="40" Height="40" 
+                            BorderBrush="White" BorderThickness="1" 
+                            Margin="0,0,0,8" />
+                    <TextBlock x:Name="ColorHexText" 
+                               Foreground="White" 
+                               HorizontalAlignment="Center" 
+                               FontFamily="Consolas" />
+                    <TextBlock Text="Click to pick" 
+                               Foreground="Gray" 
+                               FontSize="10"
+                               HorizontalAlignment="Center" 
+                               Margin="0,4,0,0" />
+                    <TextBlock Text="ESC to cancel" 
+                               Foreground="Gray" 
+                               FontSize="10"
+                               HorizontalAlignment="Center" />
+                </StackPanel>
+            </Border>
+        </Canvas>
+    </Grid>
+</Window>

@@ -1,0 +1,81 @@
+<Window x:Class="OmniMark.ScheduleDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Preset Schedule"
+        Width="420"
+        SizeToContent="Height"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False">
+    
+    <StackPanel Margin="16">
+        <!-- Enable Schedule -->
+        <CheckBox x:Name="ChkEnabled" Content="Enable automatic preset rotation" 
+                  FontWeight="SemiBold" Margin="0,0,0,12" />
+        
+        <!-- Settings Panel -->
+        <StackPanel x:Name="SettingsPanel">
+            <!-- Interval -->
+            <Label Content="Switch interval (minutes):" FontWeight="SemiBold" />
+            <Grid Margin="0,4,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="60" />
+                </Grid.ColumnDefinitions>
+                <Slider x:Name="SliderInterval" Grid.Column="0"
+                        Minimum="1" Maximum="120" TickFrequency="1" IsSnapToTickEnabled="True"
+                        ValueChanged="SliderInterval_ValueChanged" />
+                <TextBox x:Name="TxtIntervalValue" Grid.Column="1" 
+                         Margin="8,0,0,0" Padding="4,2"
+                         HorizontalContentAlignment="Center" VerticalAlignment="Center" />
+            </Grid>
+            
+            <!-- Mode -->
+            <Label Content="Rotation mode:" FontWeight="SemiBold" Margin="0,12,0,0" />
+            <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                <RadioButton x:Name="RbSequential" Content="Sequential" Margin="0,0,16,0" />
+                <RadioButton x:Name="RbRandom" Content="Random" />
+            </StackPanel>
+            
+            <!-- Preset Selection -->
+            <Label Content="Presets to rotate:" FontWeight="SemiBold" Margin="0,12,0,0" />
+            <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="4" 
+                    MaxHeight="200" Margin="0,4,0,0">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel x:Name="PresetCheckList" Margin="8" />
+                </ScrollViewer>
+            </Border>
+            
+            <TextBlock x:Name="TxtNoPresets" 
+                       Text="No presets available. Please save some presets first."
+                       Foreground="Gray" FontStyle="Italic" Margin="0,8,0,0"
+                       Visibility="Collapsed" />
+            
+            <!-- Quick Actions -->
+            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                <Button Content="Select All" Padding="8,4" Margin="0,0,8,0" 
+                        Click="BtnSelectAll_Click" />
+                <Button Content="Select None" Padding="8,4" 
+                        Click="BtnSelectNone_Click" />
+            </StackPanel>
+        </StackPanel>
+        
+        <Separator Margin="0,16,0,12" />
+        
+        <!-- Status -->
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+            <TextBlock Text="Status: " FontWeight="SemiBold" />
+            <TextBlock x:Name="TxtStatus" Text="Not running" Foreground="Gray" />
+        </StackPanel>
+        
+        <!-- Buttons -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Test Switch" Padding="12,6" Margin="4,0" 
+                    Click="BtnTestSwitch_Click" />
+            <Button Content="Save" Padding="16,6" Margin="4,0" 
+                    Click="BtnSave_Click" IsDefault="True" />
+            <Button Content="Cancel" Padding="16,6" Margin="4,0" 
+                    Click="BtnCancel_Click" IsCancel="True" />
+        </StackPanel>
+    </StackPanel>
+</Window>

@@ -6,7 +6,7 @@
         AllowsTransparency="True"
         Background="Transparent"
         Topmost="True"
-        WindowState="Maximized"
+        WindowState="Normal"
         ShowInTaskbar="False"
         Title="OmniMark">
     <local:WatermarkOverlay x:Name="Overlay" />
